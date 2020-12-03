@@ -27,7 +27,7 @@ RUN env
 RUN echo "env end"
 RUN echo "nproc" && echo $(nproc)
 
-RUN apt-get install -y python2 python3
+RUN apt-get install -y python
 # Download and compile vulkan components
 RUN cd /docker_debian10_vulkan/Vulkan-ValidationLayers && \
     git checkout $(git describe --tags `git rev-list --tags --max-count=1`) && \
