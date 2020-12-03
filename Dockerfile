@@ -3,6 +3,7 @@ FROM docker_debian10_cuda11_nvenc10:latest
 COPY . /docker_debian10_vulkan
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    python \
     build-essential \
     ca-certificates \
     git \
@@ -27,7 +28,6 @@ RUN env
 RUN echo "env end"
 RUN echo "nproc" && echo $(nproc)
 
-RUN apt-get install -y python
 # Download and compile vulkan components
 RUN cd /docker_debian10_vulkan/Vulkan-ValidationLayers && \
     git checkout $(git describe --tags `git rev-list --tags --max-count=1`) && \
