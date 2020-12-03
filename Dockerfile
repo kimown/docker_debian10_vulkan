@@ -30,9 +30,9 @@ RUN echo "nproc" && echo $(nproc)
 # Download and compile vulkan components
 RUN cd /docker_debian10_vulkan/Vulkan-ValidationLayers && \
     git checkout $(git describe --tags `git rev-list --tags --max-count=1`) && \
-    mkdir build && cd build && export MAKE_JOBS=5 && ../scripts/update_deps.py && \
+    mkdir build && cd build && export MAKE_JOBS=$(nproc) && ../scripts/update_deps.py && \
     cmake -C helper.cmake -DCMAKE_BUILD_TYPE=Release .. && \
-    cmake --build . -j 1 && make install && ldconfig && \
+    cmake --build . -j $(nproc) && make install && ldconfig && \
     mkdir -p /usr/local/lib && cp -a Vulkan-Loader/build/install/lib/* /usr/local/lib || echo "Vulkan_Loader" && \
     mkdir -p /usr/local/include/vulkan && cp -r Vulkan-Headers/build/install/include/vulkan/* /usr/local/include/vulkan && \
     mkdir -p /usr/local/share/vulkan/registry && \
