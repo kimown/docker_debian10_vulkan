@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 # Install cmake version 3.15
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.15.2/cmake-3.15.2-Linux-x86_64.tar.gz && \
+RUN cd /docker_debian10_vulkan && \
     tar -xvf cmake-3.15.2-Linux-x86_64.tar.gz && cp cmake-3.15.2-Linux-x86_64/bin/cmake /usr/local/bin && \
     mkdir -p /usr/local/share/cmake-3.15 && \
     cp -r cmake-3.15.2-Linux-x86_64/share/cmake-3.15/* /usr/local/share/cmake-3.15 && \
@@ -28,8 +28,8 @@ RUN echo "env end"
 RUN echo "nproc" && echo $(nproc)
 
 # Download and compile vulkan components
-RUN git clone --depth 1 https://github.com/KhronosGroup/Vulkan-ValidationLayers.git /opt/vulkan && \
-    cd /opt/vulkan && git checkout $(git describe --tags `git rev-list --tags --max-count=1`) && \
+RUN cd /docker_debian10_vulkan/Vulkan-ValidationLayers && \
+    git checkout $(git describe --tags `git rev-list --tags --max-count=1`) && \
     mkdir build && cd build && export MAKE_JOBS=5 && ../scripts/update_deps.py && \
     cmake -C helper.cmake -DCMAKE_BUILD_TYPE=Release .. && \
     cmake --build . -j 1 && make install && ldconfig && \
