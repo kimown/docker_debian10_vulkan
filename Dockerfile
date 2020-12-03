@@ -3,7 +3,6 @@ FROM docker_debian10_cuda11_nvenc10:latest
 COPY . /docker_debian10_vulkan
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python \
     build-essential \
     ca-certificates \
     git \
