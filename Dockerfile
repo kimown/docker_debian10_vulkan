@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libwayland-dev \
     libxrandr-dev \
     libegl1-mesa-dev \
+    python \
     python3 \
     wget && \
     rm -rf /var/lib/apt/lists/*
@@ -33,11 +34,12 @@ RUN cd /docker_debian10_vulkan/Vulkan-ValidationLayers && \
     mkdir build && cd build && export MAKE_JOBS=$(nproc) && ../scripts/update_deps.py && \
     cmake -C helper.cmake -DCMAKE_BUILD_TYPE=Release .. && \
     cmake --build . -j $(nproc) && make install && ldconfig && \
-    mkdir -p /usr/local/lib && cp -a Vulkan-Loader/build/install/lib/* /usr/local/lib || echo "Vulkan_Loader" && \
-    mkdir -p /usr/local/include/vulkan && cp -r Vulkan-Headers/build/install/include/vulkan/* /usr/local/include/vulkan && \
-    mkdir -p /usr/local/share/vulkan/registry && \
-    cp -r Vulkan-Headers/build/install/share/vulkan/registry/* /usr/local/share/vulkan/registry && \
-    rm -rf /opt/vulkan && unset http_proxy https_proxy
+    echo "done"
+#    mkdir -p /usr/local/lib && cp -a Vulkan-Loader/build/install/lib/* /usr/local/lib || echo "Vulkan_Loader" && \
+#    mkdir -p /usr/local/include/vulkan && cp -r Vulkan-Headers/build/install/include/vulkan/* /usr/local/include/vulkan && \
+#    mkdir -p /usr/local/share/vulkan/registry && \
+#    cp -r Vulkan-Headers/build/install/share/vulkan/registry/* /usr/local/share/vulkan/registry && \
+#    rm -rf /opt/vulkan && unset http_proxy https_proxy
 
     
 RUN apt-get update && apt-get install -y --no-install-recommends \
