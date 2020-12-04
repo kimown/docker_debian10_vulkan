@@ -53,6 +53,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY nvidia_icd.json /etc/vulkan/icd.d/nvidia_icd.json
 
 RUN ls /usr/lib/x86_64-linux-gnu/libnvidia-glvkspirv.so.450.80.02
+
+RUN cd /docker_debian10_vulkan  && tar -xvf vulkansdk-linux-x86_64-1.2.135.0.tar.gz && cd 1.2.135.0 && echo "source ${PWD}/setup-env.sh">> ~/.bashrc &&  cat ~/.bashrc
 #RUN cp /docker_debian10_cuda11_nvenc10/NVIDIA-Linux-x86_64-450.80.02.run /docker_debian10_vulkan && cd /docker_debian10_vulkan  && chmod +x NVIDIA-Linux-x86_64-450.80.02.run && \
 #    ./NVIDIA-Linux-x86_64-450.80.02.run --extract-only && cd NVIDIA-Linux-x86_64-450.80.02 && ls && ls /usr/lib/x86_64-linux-gnu/ && cp libnvidia-glvkspirv.so.450.80.02 /usr/lib/x86_64-linux-gnu/ 
 #    
